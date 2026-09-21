@@ -105,22 +105,21 @@ def load_chess(platform, user):
 AXES = ["Attaque", "Défense", "Possession", "Physique", "Transition"]
 KELLY = {"Conservateur": 0.10, "Modéré": 0.25, "Agressif": 0.50}
 
-# Base de données multi-championnats
 DATABASE_MATCHES = {
     "Ligue 1": {
-        "PSG – OM": dict(h="PSG", a="OM", xh=2.35, xa=1.15, odds=(1.95, 3.70, 4.60), poss=(64.2, 48.0), sot=(7.1, 3.8), fouls=(9.4, 14.2), cs=(50, 20), form=("V V N V V", "D V N D V"), power=([85, 78, 92, 64, 88], [70, 65, 55, 78, 60]), notes=("OM : Balerdi suspendu", "PSG : Effectif complet")),
-        "Monaco – Lyon": dict(h="Monaco", a="Lyon", xh=1.90, xa=1.40, odds=(2.10, 3.60, 3.20), poss=(55.0, 52.0), sot=(5.8, 4.5), fouls=(11.0, 12.5), cs=(30, 25), form=("V D V V N", "V V D N D"), power=([80, 70, 75, 70, 82], [75, 68, 72, 68, 76]), notes=("Monaco fort à domicile", "Lyon irrégulier en déplacement"))
+        "PSG – OM": dict(h="PSG", a="OM", xh=2.35, xa=1.15, odds=(1.95, 3.70, 4.60), poss=(64.2, 48.0), sot=(7.1, 3.8), fouls=(9.4, 14.2), cs=(50, 20), form=("V V N V V", "D V N D V"), power=([85, 78, 92, 64, 88], [70, 65, 55, 78, 60]), notes=("OM : Balerdi suspendu", "PSG : Effectif complet"), date="Aujourd'hui"),
+        "Monaco – Lyon": dict(h="Monaco", a="Lyon", xh=1.90, xa=1.40, odds=(2.10, 3.60, 3.20), poss=(55.0, 52.0), sot=(5.8, 4.5), fouls=(11.0, 12.5), cs=(30, 25), form=("V D V V N", "V V D N D"), power=([80, 70, 75, 70, 82], [75, 68, 72, 68, 76]), notes=("Monaco fort à domicile", "Lyon irrégulier en déplacement"), date="Demain")
     },
     "Bundesliga": {
-        "Bayern Munich – Borussia Dortmund": dict(h="Bayern", a="Dortmund", xh=2.60, xa=1.30, odds=(1.55, 4.80, 5.20), poss=(66.0, 51.0), sot=(8.2, 4.1), fouls=(8.5, 11.0), cs=(45, 25), form=("V V V D V", "V N V D V"), power=([92, 80, 90, 75, 88], [78, 70, 74, 76, 80]), notes=("Bayern : Attaque en feu", "Dortmund : Défense centrale fragilisée")),
-        "Bayer Leverkusen – RB Leipzig": dict(h="Leverkusen", a="Leipzig", xh=2.10, xa=1.50, odds=(1.90, 3.80, 3.70), poss=(61.0, 53.0), sot=(6.5, 5.0), fouls=(10.0, 12.0), cs=(40, 35), form=("V V V V N", "D V V N V"), power=([86, 82, 85, 78, 85], [80, 76, 78, 80, 82]), notes=("Match très tactique", "Excellente transition des deux côtés"))
+        "Bayern Munich – Borussia Dortmund": dict(h="Bayern", a="Dortmund", xh=2.60, xa=1.30, odds=(1.55, 4.80, 5.20), poss=(66.0, 51.0), sot=(8.2, 4.1), fouls=(8.5, 11.0), cs=(45, 25), form=("V V V D V", "V N V D V"), power=([92, 80, 90, 75, 88], [78, 70, 74, 76, 80]), notes=("Bayern : Attaque en feu", "Dortmund : Défense centrale fragilisée"), date="Aujourd'hui"),
+        "Bayer Leverkusen – RB Leipzig": dict(h="Leverkusen", a="Leipzig", xh=2.10, xa=1.50, odds=(1.90, 3.80, 3.70), poss=(61.0, 53.0), sot=(6.5, 5.0), fouls=(10.0, 12.0), cs=(40, 35), form=("V V V V N", "D V V N V"), power=([86, 82, 85, 78, 85], [80, 76, 78, 80, 82]), notes=("Match très tactique", "Excellente transition des deux côtés"), date="Aujourd'hui")
     },
     "Premier League": {
-        "Arsenal – Manchester City": dict(h="Arsenal", a="City", xh=1.70, xa=1.75, odds=(2.70, 3.40, 2.55), poss=(55.0, 61.0), sot=(5.0, 5.9), fouls=(10.5, 9.0), cs=(40, 38), form=("V N V V D", "V V N V V"), power=([80, 86, 78, 82, 76], [90, 78, 92, 74, 88]), notes=("Arsenal : Retour de titulaire", "City : Rotation probable")),
-        "Liverpool – Chelsea": dict(h="Liverpool", a="Chelsea", xh=2.20, xa=1.20, odds=(1.75, 4.00, 4.20), poss=(58.0, 54.0), sot=(6.8, 4.2), fouls=(11.0, 13.0), cs=(38, 28), form=("V V D V V", "N V D V N"), power=([88, 78, 82, 84, 86], [76, 72, 78, 72, 75]), notes=("Anfield est un fort", "Chelsea cherche de la stabilité"))
+        "Arsenal – Manchester City": dict(h="Arsenal", a="City", xh=1.70, xa=1.75, odds=(2.70, 3.40, 2.55), poss=(55.0, 61.0), sot=(5.0, 5.9), fouls=(10.5, 9.0), cs=(40, 38), form=("V N V V D", "V V N V V"), power=([80, 86, 78, 82, 76], [90, 78, 92, 74, 88]), notes=("Arsenal : Retour de titulaire", "City : Rotation probable"), date="Aujourd'hui"),
+        "Liverpool – Chelsea": dict(h="Liverpool", a="Chelsea", xh=2.20, xa=1.20, odds=(1.75, 4.00, 4.20), poss=(58.0, 54.0), sot=(6.8, 4.2), fouls=(11.0, 13.0), cs=(38, 28), form=("V V D V V", "N V D V N"), power=([88, 78, 82, 84, 86], [76, 72, 78, 72, 75]), notes=("Anfield est un fort", "Chelsea cherche de la stabilité"), date="Demain")
     },
     "La Liga": {
-        "Real Madrid – FC Barcelone": dict(h="Real", a="Barça", xh=1.85, xa=1.60, odds=(2.15, 3.60, 3.30), poss=(52.0, 60.5), sot=(5.2, 5.6), fouls=(11.8, 10.1), cs=(35, 30), form=("V V V N V", "V D V V N"), power=([88, 74, 70, 80, 90], [84, 70, 88, 66, 82]), notes=("Real : Milieu physique", "Barça : Possession haute"))
+        "Real Madrid – FC Barcelone": dict(h="Real", a="Barça", xh=1.85, xa=1.60, odds=(2.15, 3.60, 3.30), poss=(52.0, 60.5), sot=(5.2, 5.6), fouls=(11.8, 10.1), cs=(35, 30), form=("V V V N V", "V D V V N"), power=([88, 74, 70, 80, 90], [84, 70, 88, 66, 82]), notes=("Real : Milieu physique", "Barça : Possession haute"), date="Aujourd'hui")
     }
 }
 
@@ -174,6 +173,7 @@ st.markdown(f"""
 tab_sport, tab_chess, tab_open, tab_quant, tab_backtest = st.tabs([
     f"📊 Analyse {league}", "♟️ Station Échecs", "📚 Répertoire Ouvertures", "💼 Simulation & Portfolio", "📈 Backtesting & ROI"
 ])
+
 # ----------------------------- Onglet 1 : Sport -----------------------------
 with tab_sport:
     st.subheader(f"📊 Analyse des Paris — {league}")
@@ -187,7 +187,7 @@ with tab_sport:
             horizontal=True
         )
 
-    # 2. Récupération et filtrage des matchs disponibles
+    # 2. Récupération et filtrage des matchs
     league_matches = DATABASE_MATCHES.get(league, {
         f"Équipe A – Équipe B ({league})": dict(
             h="Équipe A", a="Équipe B", xh=1.65, xa=1.20,
@@ -198,7 +198,6 @@ with tab_sport:
         )
     })
 
-    # Filtrer le dictionnaire des matchs selon le filtre radio choisi
     matchs_filtres = {}
     for key, val in league_matches.items():
         date_match = val.get("date", "Aujourd'hui")
@@ -208,88 +207,88 @@ with tab_sport:
             continue
         matchs_filtres[key] = val
 
-    # Vérification s'il y a des matchs
+    # 3. Affichage conditionnel
     if not matchs_filtres:
         st.info(f"ℹ️ Aucun match prévu **{filtre_date.lower()}** pour cette ligue.")
     else:
-        # Sélecteur de match basé sur la liste filtrée
         selected_match_name = st.selectbox("Sélectionner l'affiche du jour :", list(matchs_filtres.keys()))
         m = matchs_filtres[selected_match_name]
-    # Contrôles interactifs du live et ajustements
-    with st.expander("🛠️ Panneau de contrôle interactif (Live, xG & Cotes)", expanded=True):
-        c1, c2, c3, c4, c5 = st.columns(5)
-        xh = c1.number_input(f"xG {m['h']}", 0.1, 5.0, m["xh"], 0.05)
-        xa = c2.number_input(f"xG {m['a']}", 0.1, 5.0, m["xa"], 0.05)
-        o1 = c3.number_input(f"Cote {m['h']}", 1.01, 30.0, m["odds"][0], 0.05)
-        oX = c4.number_input("Cote Nul", 1.01, 30.0, m["odds"][1], 0.05)
-        o2 = c5.number_input(f"Cote {m['a']}", 1.01, 30.0, m["odds"][2], 0.05)
 
-    # Calculs du Modèle de Poisson
-    M = poisson_matrix(xh, xa)
-    probs = [np.tril(M, -1).sum(), np.trace(M), np.triu(M, 1).sum()]
-    odds, labels = [o1, oX, o2], [m["h"], "Nul", m["a"]]
-    imp = np.array([1 / o for o in odds])
-    fair = imp / imp.sum()
-    ev = [p * o - 1 for p, o in zip(probs, odds)]
-    k = int(np.argmax(ev))
-    kelly = max(0.0, (probs[k] * odds[k] - 1) / (odds[k] - 1))
-    stake = min(bankroll * kelly * KELLY[risk], bankroll * 0.05)
-    idx = np.add.outer(range(M.shape[0]), range(M.shape[1]))
+        # Contrôles interactifs du live et ajustements
+        with st.expander("🛠️ Panneau de contrôle interactif (Live, xG & Cotes)", expanded=True):
+            c1, c2, c3, c4, c5 = st.columns(5)
+            xh = c1.number_input(f"xG {m['h']}", 0.1, 5.0, m["xh"], 0.05)
+            xa = c2.number_input(f"xG {m['a']}", 0.1, 5.0, m["xa"], 0.05)
+            o1 = c3.number_input(f"Cote {m['h']}", 1.01, 30.0, m["odds"][0], 0.05)
+            oX = c4.number_input("Cote Nul", 1.01, 30.0, m["odds"][1], 0.05)
+            o2 = c5.number_input(f"Cote {m['a']}", 1.01, 30.0, m["odds"][2], 0.05)
 
-    if ev[k] > 0:
-        st.markdown(f'<div class="signal"><b>⚡ Opportunité EV+ Détectée : {labels[k]} à {odds[k]:.2f}</b><br>'
-                    f'<span>Probabilité modèle : <b>{probs[k]:.1%}</b> vs Marché : <b>{fair[k]:.1%}</b>. '
-                    f'Esperance de gain : <b>{ev[k]:+.1%}</b>. Mise optimale (Kelly {risk}) : <b>{stake:.2f} €</b>.</span></div>', unsafe_allow_html=True)
-    else:
-        st.markdown('<div class="signal" style="border-color:#8A97B3"><b>⚪ Pas de Value Bet identifié</b><br>'
-                    '<span>Le marché est parfaitement ajusté ou surévalué par rapport au modèle de Poisson. Pas de prise de risque recommandée.</span></div>', unsafe_allow_html=True)
+        # Calculs du Modèle de Poisson
+        M = poisson_matrix(xh, xa)
+        probs = [np.tril(M, -1).sum(), np.trace(M), np.triu(M, 1).sum()]
+        odds, labels = [o1, oX, o2], [m["h"], "Nul", m["a"]]
+        imp = np.array([1 / o for o in odds])
+        fair = imp / imp.sum()
+        ev = [p * o - 1 for p, o in zip(probs, odds)]
+        k = int(np.argmax(ev))
+        kelly = max(0.0, (probs[k] * odds[k] - 1) / (odds[k] - 1))
+        stake = min(bankroll * kelly * KELLY[risk], bankroll * 0.05)
+        idx = np.add.outer(range(M.shape[0]), range(M.shape[1]))
 
-    s = st.columns(6)
-    stat(s[0], f"Prob. {m['h']}", f"{probs[0]:.1%}", f"Marché: {fair[0]:.1%}", "up" if ev[0]>0 else "")
-    stat(s[1], "Prob. Nul", f"{probs[1]:.1%}", f"Marché: {fair[1]:.1%}", "up" if ev[1]>0 else "")
-    stat(s[2], f"Prob. {m['a']}", f"{probs[2]:.1%}", f"Marché: {fair[2]:.1%}", "up" if ev[2]>0 else "")
-    stat(s[3], "Meilleur EV", f"{ev[k]:+.1%}", labels[k], "up" if ev[k] > 0 else "down")
-    stat(s[4], "Total xG Match", f"{xh + xa:.2f}", "Plafond Buts", "warn")
-    stat(s[5], "Mise Conseillée", f"{stake:.2f} €", f"{stake/bankroll:.1%} du Capital", "warn")
+        if ev[k] > 0:
+            st.markdown(f'<div class="signal"><b>⚡ Opportunité EV+ Détectée : {labels[k]} à {odds[k]:.2f}</b><br>'
+                        f'<span>Probabilité modèle : <b>{probs[k]:.1%}</b> vs Marché : <b>{fair[k]:.1%}</b>. '
+                        f'Espérance de gain : <b>{ev[k]:+.1%}</b>. Mise optimale (Kelly {risk}) : <b>{stake:.2f} €</b>.</span></div>', unsafe_allow_html=True)
+        else:
+            st.markdown('<div class="signal" style="border-color:#8A97B3"><b>⚪ Pas de Value Bet identifié</b><br>'
+                        '<span>Le marché est parfaitement ajusté ou surévalué par rapport au modèle de Poisson. Pas de prise de risque recommandée.</span></div>', unsafe_allow_html=True)
 
-    st.write("")
-    left, right = st.columns([3, 2])
-    with left:
-        st.markdown("##### 📈 Distribution Modèle vs Implicite Marché")
-        fig = go.Figure([
-            go.Bar(name="Modèle Poisson AI", x=labels, y=np.array(probs) * 100, marker_color=TEAL),
-            go.Bar(name="Marché Bookmaker (Marge ajustée)", x=labels, y=fair * 100, marker_color=STEEL)
-        ])
-        fig.update_layout(barmode="group", yaxis_title="Probabilité (%)")
-        show(style(fig, 260))
+        s = st.columns(6)
+        stat(s[0], f"Prob. {m['h']}", f"{probs[0]:.1%}", f"Marché: {fair[0]:.1%}", "up" if ev[0]>0 else "")
+        stat(s[1], "Prob. Nul", f"{probs[1]:.1%}", f"Marché: {fair[1]:.1%}", "up" if ev[1]>0 else "")
+        stat(s[2], f"Prob. {m['a']}", f"{probs[2]:.1%}", f"Marché: {fair[2]:.1%}", "up" if ev[2]>0 else "")
+        stat(s[3], "Meilleur EV", f"{ev[k]:+.1%}", labels[k], "up" if ev[k] > 0 else "down")
+        stat(s[4], "Total xG Match", f"{xh + xa:.2f}", "Plafond Buts", "warn")
+        stat(s[5], "Mise Conseillée", f"{stake:.2f} €", f"{stake/bankroll:.1%} du Capital", "warn")
 
-        st.markdown("##### 🎯 Probabilités des Marchés Annexes")
-        table(pd.DataFrame({
-            "Marché": ["Plus de 1,5 buts", "Plus de 2,5 buts", "Plus de 3,5 buts", "Les deux équipes marquent", "Clean Sheet " + m["h"]],
-            "Probabilité": [f"{M[idx >= 2].sum():.1%}", f"{M[idx >= 3].sum():.1%}", f"{M[idx >= 4].sum():.1%}", f"{M[1:, 1:].sum():.1%}", f"{M[:, 0].sum():.1%}"],
-            "Cote Juste Estimée": [f"{1 / max(v, 1e-6):.2f}" for v in (M[idx >= 2].sum(), M[idx >= 3].sum(), M[idx >= 4].sum(), M[1:, 1:].sum(), M[:, 0].sum())]
-        }))
+        st.write("")
+        left, right = st.columns([3, 2])
+        with left:
+            st.markdown("##### 📈 Distribution Modèle vs Implicite Marché")
+            fig = go.Figure([
+                go.Bar(name="Modèle Poisson AI", x=labels, y=np.array(probs) * 100, marker_color=TEAL),
+                go.Bar(name="Marché Bookmaker (Marge ajustée)", x=labels, y=fair * 100, marker_color=STEEL)
+            ])
+            fig.update_layout(barmode="group", yaxis_title="Probabilité (%)")
+            show(style(fig, 260))
 
-        st.markdown("##### 📊 Comparatif Statistique Équipes")
-        table(pd.DataFrame({
-            "Indicateur": ["xG moyen par match", "Possession moyenne (%)", "Tirs cadrés / match", "Fautes / match", "Clean sheets (%)", "Forme (5 derniers)"],
-            m["h"]: [f"{xh:.2f}", m["poss"][0], m["sot"][0], m["fouls"][0], m["cs"][0], m["form"][0]],
-            m["a"]: [f"{xa:.2f}", m["poss"][1], m["sot"][1], m["fouls"][1], m["cs"][1], m["form"][1]]
-        }))
+            st.markdown("##### 🎯 Probabilités des Marchés Annexes")
+            table(pd.DataFrame({
+                "Marché": ["Plus de 1,5 buts", "Plus de 2,5 buts", "Plus de 3,5 buts", "Les deux équipes marquent", "Clean Sheet " + m["h"]],
+                "Probabilité": [f"{M[idx >= 2].sum():.1%}", f"{M[idx >= 3].sum():.1%}", f"{M[idx >= 4].sum():.1%}", f"{M[1:, 1:].sum():.1%}", f"{M[:, 0].sum():.1%}"],
+                "Cote Juste Estimée": [f"{1 / max(v, 1e-6):.2f}" for v in (M[idx >= 2].sum(), M[idx >= 3].sum(), M[idx >= 4].sum(), M[1:, 1:].sum(), M[:, 0].sum())]
+            }))
 
-    with right:
-        st.markdown("##### 🧮 Matrice des Scores Exacts Probables (Top 36)")
-        z = M[:6, :6] * 100
-        hm = go.Figure(go.Heatmap(z=z, x=list(range(6)), y=list(range(6)), colorscale=[[0, "#0F182C"], [1, AMB]], texttemplate="%{z:.1f}%", showscale=False))
-        hm.update_layout(xaxis_title=f"Buts {m['a']}", yaxis_title=f"Buts {m['h']}", yaxis_autorange="reversed")
-        show(style(hm, 280, False))
+            st.markdown("##### 📊 Comparatif Statistique Équipes")
+            table(pd.DataFrame({
+                "Indicateur": ["xG moyen par match", "Possession moyenne (%)", "Tirs cadrés / match", "Fautes / match", "Clean sheets (%)", "Forme (5 derniers)"],
+                m["h"]: [f"{xh:.2f}", m["poss"][0], m["sot"][0], m["fouls"][0], m["cs"][0], m["form"][0]],
+                m["a"]: [f"{xa:.2f}", m["poss"][1], m["sot"][1], m["fouls"][1], m["cs"][1], m["form"][1]]
+            }))
 
-        st.markdown("##### ⚡ Radar des Forces Tactiques")
-        rd = go.Figure()
-        for team, vals, col in ((m["h"], m["power"][0], TEAL), (m["a"], m["power"][1], CORAL)):
-            rd.add_trace(go.Scatterpolar(r=vals + vals[:1], theta=AXES + AXES[:1], name=team, fill="toself", line_color=col))
-        rd.update_layout(polar=dict(bgcolor="rgba(0,0,0,0)", radialaxis=dict(visible=False)))
-        show(style(rd, 240))
+        with right:
+            st.markdown("##### 🧮 Matrice des Scores Exacts Probables (Top 36)")
+            z = M[:6, :6] * 100
+            hm = go.Figure(go.Heatmap(z=z, x=list(range(6)), y=list(range(6)), colorscale=[[0, "#0F182C"], [1, AMB]], texttemplate="%{z:.1f}%", showscale=False))
+            hm.update_layout(xaxis_title=f"Buts {m['a']}", yaxis_title=f"Buts {m['h']}", yaxis_autorange="reversed")
+            show(style(hm, 280, False))
+
+            st.markdown("##### ⚡ Radar des Forces Tactiques")
+            rd = go.Figure()
+            for team, vals, col in ((m["h"], m["power"][0], TEAL), (m["a"], m["power"][1], CORAL)):
+                rd.add_trace(go.Scatterpolar(r=vals + vals[:1], theta=AXES + AXES[:1], name=team, fill="toself", line_color=col))
+            rd.update_layout(polar=dict(bgcolor="rgba(0,0,0,0)", radialaxis=dict(visible=False)))
+            show(style(rd, 240))
 
 # ----------------------------- Onglet 2 : Échecs -----------------------------
 with tab_chess:
@@ -337,7 +336,7 @@ with tab_open:
         st.markdown(f"**Premier coups :** `{o['moves']}`")
         st.markdown(f"**Niveau conseillé :** {o['level']} | **Style :** {o['style']}")
         st.markdown("**Plans de développement :**\n" + "\n".join(f"- {p}" for p in o["plans"]))
-        st.warning(f"⚠️ Piege classique : {o['trap']}")
+        st.warning(f"⚠️ Piège classique : {o['trap']}")
     with r:
         s = st.columns(3)
         stat(s[0], "Win Rate Blancs", f"{o['w']} %", tone="up")
@@ -387,22 +386,20 @@ with tab_quant:
         fig = px.histogram(x=final, nbins=30, color_discrete_sequence=[TEAL])
         fig.add_vline(x=bankroll, line_dash="dash", line_color=CORAL)
         show(style(fig, 300, False))
+
 # ----------------------------- Onglet 5 : Backtesting & Historique -----------------------------
 with tab_backtest:
     st.subheader("📈 Backtesting & Analyse des Performances Réelles")
     st.markdown("Importe ton fichier CSV de paris passés pour analyser ton rendement réel, ton Drawdown et ton Sharpe Ratio.")
 
-    # Exemple de structure CSV attendue
     st.info("💡 **Format CSV attendu :** Colonnes `Date`, `Mise`, `Cote`, `Résultat` (valeurs de Résultat : `Gagné`, `Perdu`, `Remboursé`).")
 
-    # Mode démo ou import utilisateur
     uploaded_file = st.file_uploader("Déposer un fichier CSV de vos paris", type=["csv"])
 
     if uploaded_file is not None:
         df_history = pd.read_csv(uploaded_file)
     else:
         st.warning("⚠️ Aucun fichier importé. Chargement d'un **jeu de données de démonstration (100 paris)**.")
-        # Génération de données factices pour la démonstration
         np.random.seed(42)
         dates = pd.date_range(end=pd.Timestamp.now(), periods=100, freq='D')
         mises = np.random.choice([20, 50, 100], size=100)
@@ -410,7 +407,6 @@ with tab_backtest:
         results = np.random.choice(["Gagné", "Perdu", "Remboursé"], size=100, p=[0.52, 0.45, 0.03])
         df_history = pd.DataFrame({"Date": dates, "Mise": mises, "Cote": cotes, "Résultat": results})
 
-    # Calculs quantitatifs du Backtest
     if not df_history.empty:
         df_history["Profit_Pari"] = 0.0
         df_history.loc[df_history["Résultat"] == "Gagné", "Profit_Pari"] = df_history["Mise"] * (df_history["Cote"] - 1)
@@ -418,22 +414,18 @@ with tab_backtest:
         df_history["Profit_Cumulé"] = df_history["Profit_Pari"].cumsum()
         df_history["Capital"] = bankroll + df_history["Profit_Cumulé"]
 
-        # Indicateurs clés de performance (KPIs)
         total_mises = df_history["Mise"].sum()
         total_profit = df_history["Profit_Pari"].sum()
         roi = (total_profit / total_mises) if total_mises > 0 else 0
         winrate = (df_history["Résultat"] == "Gagné").mean()
 
-        # Calculation du Max Drawdown
         peak = df_history["Capital"].cummax()
         drawdown = (df_history["Capital"] - peak) / peak
         max_drawdown = drawdown.min()
 
-        # Sharpe Ratio simplifié (sur rendement par pari)
         returns = df_history["Profit_Pari"] / df_history["Mise"]
         sharpe = (returns.mean() / returns.std()) * np.sqrt(100) if returns.std() != 0 else 0
 
-        # Affichage des statistiques
         s = st.columns(5)
         stat(s[0], "Profit Total", f"{total_profit:+,.2f} €", tone="up" if total_profit >= 0 else "down")
         stat(s[1], "ROI Réel", f"{roi:+.2%}", tone="up" if roi >= 0 else "down")
