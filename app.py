@@ -178,69 +178,43 @@ tab_sport, tab_chess, tab_open, tab_quant, tab_backtest = st.tabs([
 with tab_sport:
     st.subheader(f"📊 Analyse des Paris — {league}")
 
-    # --- FILTRE PAR DATE ---
+    # 1. Filtre par date
     col_filter, _ = st.columns([2, 2])
     with col_filter:
         filtre_date = st.radio(
-            "📅 Filtrer par date :",
+            "📅 Filtrer les matchs par date :",
             ["Tous", "Aujourd'hui", "Demain"],
             horizontal=True
         )
 
-    st.write("")
+    # 2. Récupération et filtrage des matchs disponibles
+    league_matches = DATABASE_MATCHES.get(league, {
+        f"Équipe A – Équipe B ({league})": dict(
+            h="Équipe A", a="Équipe B", xh=1.65, xa=1.20,
+            odds=(2.10, 3.40, 3.50), poss=(54.0, 46.0), sot=(5.0, 4.0),
+            fouls=(11.0, 12.0), cs=(35, 25), form=("V N V D V", "D V N V D"),
+            power=([75, 75, 75, 75, 75], [70, 70, 70, 70, 70]),
+            date="Aujourd'hui"
+        )
+    })
 
-    # Filtrage et affichage des matchs
-    matchs_a_afficher = []
-    maintenant = datetime.now(timezone.utc)
-    aujourdhui_date = maintenant.date()
-    demain_date = aujourdhui_date + timedelta(days=1)
-
-    for m in match_data:
-        # Conversion du timestamp API en objet datetime
-        commence_str = m.get('commence_time', '')
-        if commence_str:
-            try:
-                # Format ISO 8601 (ex: "2026-09-21T20:45:00Z")
-                dt = datetime.fromisoformat(commence_str.replace('Z', '+00:00'))
-                match_date = dt.date()
-                date_lisible = dt.strftime("%d/%m/%Y à %H:%M")
-            except Exception:
-                match_date = aujourdhui_date
-                date_lisible = "Heure N/A"
-        else:
-            match_date = aujourdhui_date
-            date_lisible = "Aujourd'hui"
-
-        # Application du filtre radio
-        if filtre_date == "Aujourd'hui" and match_date != aujourdhui_date:
+    # Filtrer le dictionnaire des matchs selon le filtre radio choisi
+    matchs_filtres = {}
+    for key, val in league_matches.items():
+        date_match = val.get("date", "Aujourd'hui")
+        if filtre_date == "Aujourd'hui" and date_match != "Aujourd'hui":
             continue
-        elif filtre_date == "Demain" and match_date != demain_date:
+        elif filtre_date == "Demain" and date_match != "Demain":
             continue
+        matchs_filtres[key] = val
 
-        # Sauvegarde pour l'affichage
-        m_copy = dict(m)
-        m_copy['date_formatted'] = date_lisible
-        matchs_a_afficher.append(m_copy)
-
-    # Message si aucun match ne correspond au filtre
-    if not matchs_a_afficher:
-        st.info(f"ℹ️ Aucun match prévu **{filtre_date.lower()}** pour la ligue sélectionnée.")
+    # Vérification s'il y a des matchs
+    if not matchs_filtres:
+        st.info(f"ℹ️ Aucun match prévu **{filtre_date.lower()}** pour cette ligue.")
     else:
-        # Affichage des cartes de matchs
-        for match in matchs_a_afficher:
-            with st.container():
-                st.markdown(f"#### ⚽ {match['home_team']} vs {match['away_team']}")
-                st.caption(f"📅 **Date & Heure :** {match['date_formatted']}")
-
-                # Affichage des cotes
-                c1, c2, c3 = st.columns(3)
-                c1.metric(f"Victoire {match['home_team']}", f"{match.get('home_odds', 1.0):.2f}")
-                if 'draw_odds' in match and match['draw_odds']:
-                    c2.metric("Match Nul", f"{match['draw_odds']:.2f}")
-                c3.metric(f"Victoire {match['away_team']}", f"{match.get('away_odds', 1.0):.2f}")
-
-                st.divider()
-
+        # Sélecteur de match basé sur la liste filtrée
+        selected_match_name = st.selectbox("Sélectionner l'affiche du jour :", list(matchs_filtres.keys()))
+        m = matchs_filtres[selected_match_name]
     # Contrôles interactifs du live et ajustements
     with st.expander("🛠️ Panneau de contrôle interactif (Live, xG & Cotes)", expanded=True):
         c1, c2, c3, c4, c5 = st.columns(5)
