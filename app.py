@@ -170,7 +170,9 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-tab_sport, tab_chess, tab_open, tab_quant = st.tabs([f"📊 Analyse {league}", "♟️ Station Échecs", "📚 Répertoire Ouvertures", "💼 Simulation & Portfolio"])
+tab_sport, tab_chess, tab_open, tab_quant, tab_backtest = st.tabs([
+    f"📊 Analyse {league}", "♟️ Station Échecs", "📚 Répertoire Ouvertures", "💼 Simulation & Portfolio", "📈 Backtesting & ROI"
+])
 # ----------------------------- Onglet 1 : Sport -----------------------------
 with tab_sport:
     # Génération dynamique si la ligue n'a pas de matchs codés en dur
