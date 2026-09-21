@@ -354,3 +354,70 @@ with tab_quant:
         fig = px.histogram(x=final, nbins=30, color_discrete_sequence=[TEAL])
         fig.add_vline(x=bankroll, line_dash="dash", line_color=CORAL)
         show(style(fig, 300, False))
+# ----------------------------- Onglet 5 : Backtesting & Historique -----------------------------
+with tab_backtest:
+    st.subheader("📈 Backtesting & Analyse des Performances Réelles")
+    st.markdown("Importe ton fichier CSV de paris passés pour analyser ton rendement réel, ton Drawdown et ton Sharpe Ratio.")
+
+    # Exemple de structure CSV attendue
+    st.info("💡 **Format CSV attendu :** Colonnes `Date`, `Mise`, `Cote`, `Résultat` (valeurs de Résultat : `Gagné`, `Perdu`, `Remboursé`).")
+
+    # Mode démo ou import utilisateur
+    uploaded_file = st.file_uploader("Déposer un fichier CSV de vos paris", type=["csv"])
+
+    if uploaded_file is not None:
+        df_history = pd.read_csv(uploaded_file)
+    else:
+        st.warning("⚠️ Aucun fichier importé. Chargement d'un **jeu de données de démonstration (100 paris)**.")
+        # Génération de données factices pour la démonstration
+        np.random.seed(42)
+        dates = pd.date_range(end=pd.Timestamp.now(), periods=100, freq='D')
+        mises = np.random.choice([20, 50, 100], size=100)
+        cotes = np.round(np.random.uniform(1.50, 2.80, size=100), 2)
+        results = np.random.choice(["Gagné", "Perdu", "Remboursé"], size=100, p=[0.52, 0.45, 0.03])
+        df_history = pd.DataFrame({"Date": dates, "Mise": mises, "Cote": cotes, "Résultat": results})
+
+    # Calculs quantitatifs du Backtest
+    if not df_history.empty:
+        df_history["Profit_Pari"] = 0.0
+        df_history.loc[df_history["Résultat"] == "Gagné", "Profit_Pari"] = df_history["Mise"] * (df_history["Cote"] - 1)
+        df_history.loc[df_history["Résultat"] == "Perdu", "Profit_Pari"] = -df_history["Mise"]
+        df_history["Profit_Cumulé"] = df_history["Profit_Pari"].cumsum()
+        df_history["Capital"] = bankroll + df_history["Profit_Cumulé"]
+
+        # Indicateurs clés de performance (KPIs)
+        total_mises = df_history["Mise"].sum()
+        total_profit = df_history["Profit_Pari"].sum()
+        roi = (total_profit / total_mises) if total_mises > 0 else 0
+        winrate = (df_history["Résultat"] == "Gagné").mean()
+
+        # Calculation du Max Drawdown
+        peak = df_history["Capital"].cummax()
+        drawdown = (df_history["Capital"] - peak) / peak
+        max_drawdown = drawdown.min()
+
+        # Sharpe Ratio simplifié (sur rendement par pari)
+        returns = df_history["Profit_Pari"] / df_history["Mise"]
+        sharpe = (returns.mean() / returns.std()) * np.sqrt(100) if returns.std() != 0 else 0
+
+        # Affichage des statistiques
+        s = st.columns(5)
+        stat(s[0], "Profit Total", f"{total_profit:+,.2f} €", tone="up" if total_profit >= 0 else "down")
+        stat(s[1], "ROI Réel", f"{roi:+.2%}", tone="up" if roi >= 0 else "down")
+        stat(s[2], "Win Rate", f"{winrate:.1%}", f"{len(df_history)} paris")
+        stat(s[3], "Max Drawdown", f"{max_drawdown:.1%}", tone="down")
+        stat(s[4], "Sharpe Ratio", f"{sharpe:.2f}", tone="warn")
+
+        st.write("")
+        col_left, col_right = st.columns([3, 2])
+
+        with col_left:
+            st.markdown("##### 📈 Graphique d'évolution du Capital (€)")
+            fig = px.line(df_history, x="Date", y="Capital", markers=True)
+            fig.update_traces(line_color=TEAL if total_profit >= 0 else CORAL)
+            fig.add_hline(y=bankroll, line_dash="dash", line_color=STEEL, annotation_text="Capital Initial")
+            show(style(fig, 300, False))
+
+        with col_right:
+            st.markdown("##### 📋 Historique Détaillé des Paris")
+            table(df_history[["Date", "Mise", "Cote", "Résultat", "Profit_Pari"]].tail(10))
